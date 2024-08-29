@@ -32,6 +32,11 @@ class OrderedPool<PoolResourceType extends Object>
   FutureOr<int> allPoolResources() async =>
       _freeResources.length + _inUseResources.length;
 
+  Future<ReturnType> acquire<ReturnType>(
+          OperationOnResource<PoolResourceType, ReturnType> operationOnResource,
+          {Duration timeout = Duration.zero}) async =>
+      operateOnResourceWithTimeout(operationOnResource, timeout);
+
   @override
   Future<ReturnType> operateOnResourceWithTimeout<ReturnType>(
       OperationOnResource<PoolResourceType, ReturnType> operationOnResource,
